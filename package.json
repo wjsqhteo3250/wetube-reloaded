@@ -1,0 +1,33 @@
+{
+  "name": "wetube",
+  "version": "1.0.0",
+  "description": "wetube clone",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/init.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wjsqhteo3250/wetube-reloaded.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wjsqhteo3250/wetube-reloaded/issues"
+  },
+  "homepage": "https://github.com/wjsqhteo3250/wetube-reloaded#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.12.9",
+    "morgan": "^1.10.0",
+    "pug": "^3.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.0",
+    "@babel/node": "^7.13.13",
+    "@babel/preset-env": "^7.14.1",
+    "nodemon": "^2.0.7"
+  },
+  "type": "module"
+}
