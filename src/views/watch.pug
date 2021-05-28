@@ -5,8 +5,13 @@ block content
     div
         p= video.description
         small= video.createdAt
-    a(href=`${video.id}/edit`) Edit Video &rarr;
-    br
-    form(method="post" action=`${video.id}/delete`)
-        input(type="submit" value="Delete Video")
-    //- a(href=`${video.id}/delete`) Delete Video &rarr;
+    div
+        small Uploaded by 
+            a(href=`/users/${video.owner._id}`)= video.owner.username
+    if(loggedInUser)
+        if(String(loggedInUser._id) === String(video.owner._id))
+            a(href=`${video.id}/edit`) Edit Video &rarr;
+            br
+            form(method="post" action=`${video.id}/delete`)
+                input(type="submit" value="Delete Video")
+            //- a(href=`${video.id}/delete`) Delete Video &rarr;

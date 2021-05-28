@@ -7,9 +7,9 @@ const videoSchema = new mongoose.Schema({
     createdAt : {type : Date, required : true, default : Date.now},
     hashtags : [{type: String, trim: true}],
     meta : {
-        views : {type : Number, default: 0, required: true},
-        rating : {type : Number, default: 0, required: true}
-    }
+        views : {type : Number, default: 0, required: true}
+    },
+    owner : {type: mongoose.Schema.Types.ObjectId, required: true, ref:'User'}
 });
 
 // videoSchema.pre('save',async function(){

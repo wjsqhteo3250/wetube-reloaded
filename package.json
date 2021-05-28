@@ -4,7 +4,8 @@
   "description": "wetube clone",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/init.js"
+    "dev:server": "nodemon",
+    "dev:assets": "webpack"
   },
   "repository": {
     "type": "git",
@@ -33,7 +34,14 @@
     "@babel/core": "^7.14.0",
     "@babel/node": "^7.13.13",
     "@babel/preset-env": "^7.14.1",
-    "nodemon": "^2.0.7"
-  },
-  "type": "module"
+    "babel-loader": "^8.2.2",
+    "css-loader": "^5.2.6",
+    "mini-css-extract-plugin": "^1.6.0",
+    "nodemon": "^2.0.7",
+    "sass": "^1.34.0",
+    "sass-loader": "^11.1.1",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.37.1",
+    "webpack-cli": "^4.7.0"
+  }
 }

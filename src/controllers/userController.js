@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import Video from "../models/Video.js";
 import bcrypt from "bcrypt";
 import fetch from "node-fetch";
 
@@ -193,4 +194,9 @@ export const postChangePassword = async (req, res) => {
     req.session.user.password = user.password;
     return res.redirect("/users/logout")
 }
-export const see = (req, res) =>{res.send("see")};
+export const see = async (req, res) =>{
+    const {params:{id}} = req;
+    const user = await User.findById(id).populate("videos");
+    if(!user) return res.status(404).render('404', {pageTitle: "User Not Found"});
+    return res.render("users/userProfile", {pageTitle:`${user.username}의 profile`, user});
+};

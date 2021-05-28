@@ -2,6 +2,7 @@ doctype html
 html(lang="en")
     head 
         link(rel="stylesheet" href="https://unpkg.com/mvp.css")
+        link(rel="stylesheet" href="/static/css/styles.css")
         title #{pageTitle} | #{siteName}
     body
         header
@@ -21,11 +22,12 @@ html(lang="en")
                         li
                             a(href="/videos/upload") Upload
                         li
-                            a(href="/my-profile") #{loggedInUser.username}의 profile
+                            a(href=`users/${loggedInUser._id}`) #{loggedInUser.username}의 profile
                         li
                             a(href="/users/edit") edit-profile
                         li
                             a(href="/users/logout") Log Out
         main
             block content
-            include partials/footer
+    include partials/footer
+    script(src="/static/js/main.js")
