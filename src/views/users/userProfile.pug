@@ -3,5 +3,12 @@ include ../mixins/video
 
 
 block content
-    each video in user.videos 
-        +video(video)
+    div.profile-data
+        img(src="/"+user.avatarUrl).avatar
+        h3= user.name
+    div.video-grid
+        each video in user.videos 
+            +video(video)
+        else
+            span.empty__message Videos Not Found
+        

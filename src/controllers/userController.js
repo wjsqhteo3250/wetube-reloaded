@@ -196,7 +196,13 @@ export const postChangePassword = async (req, res) => {
 }
 export const see = async (req, res) =>{
     const {params:{id}} = req;
-    const user = await User.findById(id).populate("videos");
+    const user = await User.findById(id).populate({
+        path:"videos",
+        populate : {
+            path : "owner",
+            model : "User"
+        }
+    });
     if(!user) return res.status(404).render('404', {pageTitle: "User Not Found"});
     return res.render("users/userProfile", {pageTitle:`${user.username}의 profile`, user});
 };
