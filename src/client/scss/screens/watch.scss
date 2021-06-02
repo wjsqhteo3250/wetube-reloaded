@@ -1,0 +1,52 @@
+#videoContainer {
+    display: flex;
+    flex-direction:  column;
+    #videoControls {
+        position: relative;
+        bottom: 5em;
+        display: flex;
+        flex-direction: column;
+        .timeLineBox{
+            display: flex;
+            justify-content: center;
+            width: inherit;
+            #timeLine {
+                width : 88em;
+            }
+        }
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width : inherit;
+            .controlBox {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                margin-left : 2em;
+                margin-right : 2em;
+                .controlBox-left {
+                    #play {
+                        margin-right: 2em;
+                    }
+                    width : 100em;
+                }
+                .controlBox-right {
+                    #mute {
+                        margin-right: 2em;
+                    }
+                    #volume {
+                        margin-right: 2em;
+                        width : 20em;
+                    }
+                    width : 40em;
+                }
+            }
+        }
+    }
+    .hiding {
+        opacity: 0;
+        transition: opacity 1s;
+
+    }
+}
