@@ -1,3 +1,5 @@
+const { default: fetch } = require("node-fetch");
+
 const video = document.querySelector("video");
 const playBtn = document.getElementById("play"); 
 const muteBtn = document.getElementById("mute");
@@ -134,6 +136,12 @@ const handleEscKye = () => {
     fullScreenBtn.firstChild.classList.add("fa-expand");
 }
 
+const handleEnded = () => {
+    const { id } = videoContainer.dataset
+    fetch(`/api/videos/${id}/view`, {method:"post"})
+
+}
+
 playBtn.addEventListener("click", handlePlayClick);
 muteBtn.addEventListener("click", handleMute);
 volume.addEventListener("input", handleVolumeChange);
@@ -145,6 +153,7 @@ videoContainer.addEventListener("mousemove", handleMouseMove);
 videoContainer.addEventListener("mouseleave", handleMouseLeave);
 video.addEventListener("dblclick", handleFullScreen);
 video.addEventListener("click",handleMousePlay);
+video.addEventListener("ended", handleEnded);
 document.addEventListener("keydown", handleSpaceKye);
 document.addEventListener("keydown", handleFullScreenKye);
 document.addEventListener("fullscreenchange", handleEscKye);
