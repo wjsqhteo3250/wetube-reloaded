@@ -262,7 +262,8 @@ var postUpload = function postUpload(req, res) {
       }
     }
   }, null, null, [[1, 14]]);
-};
+}; //delete related database feilds
+
 
 exports.postUpload = postUpload;
 
@@ -345,7 +346,8 @@ var deleteVideo = function deleteVideo(req, res) {
           return regeneratorRuntime.awrap(_Video["default"].findByIdAndDelete(id));
 
         case 15:
-          deleteRelatedDB(userDB, "video", id);
+          deleteRelatedDB(userDB, "video", id); //when delete video then delete user's video field's one 
+
           res.redirect("/");
 
         case 17:
@@ -491,7 +493,8 @@ var createComment = function createComment(req, res) {
       }
     }
   });
-};
+}; //deleteComment
+
 
 exports.createComment = createComment;
 

@@ -92,6 +92,7 @@ export const postUpload = async (req, res) => {
     }
     
 };
+//delete related database feilds
 const deleteRelatedDB = async (model, fields, beDeletedId) => {
     if(fields === "comment") {
         const index = model.comments.indexOf(beDeletedId);
@@ -118,7 +119,7 @@ export const deleteVideo = async (req, res) => {
     }
     const userDB = await User.findById(_id);
     await Video.findByIdAndDelete(id);
-    deleteRelatedDB(userDB,"video",id);
+    deleteRelatedDB(userDB,"video",id); //when delete video then delete user's video field's one 
     res.redirect("/");        
 }
 
@@ -170,7 +171,7 @@ export const createComment = async (req, res) => {
 }
 
 
-
+//deleteComment
 export const deleteComment = async (req, res) => {
     const {id} = req.params;
     const {session: {user}} = req;

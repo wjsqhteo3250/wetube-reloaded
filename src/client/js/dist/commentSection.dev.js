@@ -21,8 +21,10 @@ var addComment = function addComment(text, id) {
   span.innerText = " ".concat(text);
   var delBtn = document.createElement("button");
   delBtn.innerText = "X";
-  delBtn.className = "delComment";
-  delBtn.addEventListener("click", handleDeleteComment);
+  delBtn.className = "delComment"; // add same class name to the newly created btn
+
+  delBtn.addEventListener("click", handleDeleteComment); //add eventListener to the currently created html delete button
+
   newComment.appendChild(icon);
   newComment.appendChild(span);
   newComment.appendChild(delBtn);
@@ -87,12 +89,14 @@ var handleSubmit = function handleSubmit(e) {
 
 if (form) {
   form.addEventListener("submit", handleSubmit);
-}
+} // delete comment's html element
+
 
 var deleteComment = function deleteComment(e) {
   var li = e.target.parentElement;
   li.remove();
-};
+}; //handling deleting comment function by fetch
+
 
 var handleDeleteComment = function handleDeleteComment(e) {
   var comment, commentId, response;
@@ -120,7 +124,8 @@ var handleDeleteComment = function handleDeleteComment(e) {
       }
     }
   });
-};
+}; //btn's add eventListener
+
 
 var x;
 

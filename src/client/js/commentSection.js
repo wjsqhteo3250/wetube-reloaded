@@ -16,8 +16,8 @@ const addComment = (text, id) => {
     span.innerText = ` ${text}`
     const delBtn = document.createElement("button");
     delBtn.innerText = "X";
-    delBtn.className = "delComment";
-    delBtn.addEventListener("click", handleDeleteComment);
+    delBtn.className = "delComment"; // add same class name to the newly created btn
+    delBtn.addEventListener("click", handleDeleteComment); //add eventListener to the currently created html delete button
     newComment.appendChild(icon);
     newComment.appendChild(span);
     newComment.appendChild(delBtn);
@@ -47,12 +47,12 @@ const handleSubmit = async (e) => {
 if(form) {
     form.addEventListener("submit", handleSubmit);
 }
-
+// delete comment's html element
 const deleteComment = (e) => {
     const li = e.target.parentElement;
     li.remove();
 }
-
+//handling deleting comment function by fetch
 const handleDeleteComment = async (e) => {
     const comment = e.target.parentElement;
     const commentId = comment.dataset.id;
@@ -63,6 +63,7 @@ const handleDeleteComment = async (e) => {
         deleteComment(e);
     }
 }
+//btn's add eventListener
 let x;
 for(x=0; x<delComment.length; x++) {
     delComment[x].addEventListener("click", handleDeleteComment);
