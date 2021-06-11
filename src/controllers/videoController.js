@@ -1,5 +1,7 @@
 import Video from "../models/Video.js";
 import User from "../models/User.js";
+import Comment from "../models/Comment.js";
+
 export const home = async (req, res)=>{
     try {
         const videos = await Video.find({}).sort({createdAt : "desc"}).populate("owner");
@@ -13,7 +15,7 @@ export const home = async (req, res)=>{
 export const watch = async (req, res) => { 
     const {id} = req.params;
     try {
-        const video = await Video.findById(id).populate("owner");
+        const video = await Video.findById(id).populate("owner").populate("comments");
         return res.render("watch", {pageTitle : video.title, video})
     } catch {
         res.status(404).render("404",{pageTitle:"video not found"})
@@ -42,6 +44,7 @@ export const postEdit = async (req, res) =>{
     }
     const video = await Video.findById(id);
     if(String(video.owner) !== _id){
+        req.flash("error", "you are not the owner of the video.");
         return res.status(403).redirect("/");
     }
     try {
@@ -50,7 +53,7 @@ export const postEdit = async (req, res) =>{
             discription,
             hashtags : Video.formatHashtags(hashtags)
         })
-
+        req.flash("success", "changes saved.")
         return res.redirect(`/videos/${id}`);
     } catch {
         res.status(404).render("404",{pageTitle:"video not found"})
@@ -130,4 +133,33 @@ export const registerView = async (req, res) => {
     video.meta.views = ++video.meta.views;
     await video.save();
     res.sendStatus(200);
+}
+
+export const createComment = async (req, res) => {
+    const {
+        session: {user},
+        body: {text},
+        params: {id}
+    } = req;
+    const video = await Video.findById(id);
+    const userDB = await User.findById(user._id);
+    if(!video) {
+        return res.sendStatus(404);
+    }
+    const comment = await Comment.create({
+        text,
+        owner: user._id,
+        video: id
+    });
+    video.comments.push(comment._id);
+    userDB.comments.push(comment._id);
+    await video.save();
+    await userDB.save();
+    return res.status(201).json({newCommentId:comment._id});
+}
+
+export const deleteComment = async (req, res) => {
+    const {id} = req.params;
+    const comment = await Comment.findByIdAndRemove(id);
+    return res.sendStatus(200)
 }

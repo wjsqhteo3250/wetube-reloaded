@@ -21,8 +21,6 @@ block content
                     div
                         button#fullScreen
                             i.fas.fa-expand
-
-
     
         div
             p= video.description
@@ -37,5 +35,23 @@ block content
                 form(method="post" action=`${video.id}/delete`)
                     input(type="submit" value="Delete Video")
                 //- a(href=`${video.id}/delete`) Delete Video &rarr;
+    if loggedIn
+        div.video-add-comments
+            form.video-comment__form#commentForm
+                textarea(cols="30", rows="10" placeholder="add public comment...")
+                button Add Comment 
+    div.video-comments
+        ul
+            each comment in video.comments.reverse()
+                li.video-comment(data-id=comment._id)
+                    i.fas.fa-comment
+                    span  #{comment.text}
+                    if(loggedIn)
+                     if(String(loggedInUser._id) === String(comment.owner))
+                        button.delComment X
+
+        
 block scripts
     script(src="/static/js/videoPlayer.js") 
+    if loggedIn
+        script(src="/static/js/commentSection.js") 

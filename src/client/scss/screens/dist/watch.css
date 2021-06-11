@@ -1,0 +1,67 @@
+#videoContainer {
+  display: flex;
+  flex-direction: column;
+}
+#videoContainer #videoControls {
+  position: relative;
+  bottom: 5em;
+  display: flex;
+  flex-direction: column;
+}
+#videoContainer #videoControls .timeLineBox {
+  display: flex;
+  justify-content: center;
+  width: inherit;
+}
+#videoContainer #videoControls .timeLineBox #timeLine {
+  width: 88em;
+}
+#videoContainer #videoControls .controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: inherit;
+}
+#videoContainer #videoControls .controls .controlBox {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-left: 2em;
+  margin-right: 2em;
+}
+#videoContainer #videoControls .controls .controlBox .controlBox-left {
+  width: 100em;
+}
+#videoContainer #videoControls .controls .controlBox .controlBox-left #play {
+  margin-right: 2em;
+}
+#videoContainer #videoControls .controls .controlBox .controlBox-right {
+  width: 40em;
+}
+#videoContainer #videoControls .controls .controlBox .controlBox-right #mute {
+  margin-right: 2em;
+}
+#videoContainer #videoControls .controls .controlBox .controlBox-right #volume {
+  margin-right: 2em;
+  width: 20em;
+}
+#videoContainer .hiding {
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.video-comments {
+  display: flex;
+  flex-direction: column;
+  max-width: 320px;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+.video-comments .video-comment {
+  padding: 10px;
+  border-radius: 9999px;
+  margin-bottom: 10px;
+  background-color: white;
+  color: black;
+}
