@@ -102,20 +102,19 @@ var handleDeleteComment = function handleDeleteComment(e) {
         case 0:
           comment = e.target.parentElement;
           commentId = comment.dataset.id;
-          console.log(commentId);
-          _context2.next = 5;
+          _context2.next = 4;
           return regeneratorRuntime.awrap((0, _nodeFetch["default"])("/api/videos/".concat(commentId, "/comment"), {
             method: "delete"
           }));
 
-        case 5:
+        case 4:
           response = _context2.sent;
 
           if (response.status === 200) {
             deleteComment(e);
           }
 
-        case 7:
+        case 6:
         case "end":
           return _context2.stop();
       }

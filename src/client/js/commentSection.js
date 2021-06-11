@@ -56,7 +56,6 @@ const deleteComment = (e) => {
 const handleDeleteComment = async (e) => {
     const comment = e.target.parentElement;
     const commentId = comment.dataset.id;
-    console.log(commentId);
     const response = await fetch(`/api/videos/${commentId}/comment`, {
         method:"delete",
     })

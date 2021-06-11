@@ -1,6 +1,7 @@
 import Video from "../models/Video.js";
 import User from "../models/User.js";
 import Comment from "../models/Comment.js";
+import { compileFile } from "pug";
 
 export const home = async (req, res)=>{
     try {
@@ -91,24 +92,34 @@ export const postUpload = async (req, res) => {
     }
     
 };
+const deleteRelatedDB = async (model, fields, beDeletedId) => {
+    if(fields === "comment") {
+        const index = model.comments.indexOf(beDeletedId);
+        model.comments.splice(index, 1);
+        await model.save();
+    }
+    if(fields === "video") {
+        const index = model.videos.indexOf(beDeletedId);
+        model.videos.splice(index, 1);
+        await model.save();
+    }
+}
 
 export const deleteVideo = async (req, res) => {
     const {id} = req.params;
     const {user: {_id}} = req.session;
-    const video = await Video.findById(id);
+    const video = await Video.findById(id).populate("owner").populate("comments");
     if(!video) {
+        console.log(1)
        return res.status(404).render("404",{pageTitle:"video not found"})
     }
-    if(String(video.owner) !== _id){
+    if(String(video.owner._id) !== _id){
         return res.status(403).redirect("/");
     }
-    try{
-        await Video.findByIdAndDelete(id);
-        res.redirect("/");        
-    }
-    catch {
-        res.redirect("/");        
-    }
+    const userDB = await User.findById(_id);
+    await Video.findByIdAndDelete(id);
+    deleteRelatedDB(userDB,"video",id);
+    res.redirect("/");        
 }
 
 export const search = async (req, res) => {
@@ -150,7 +161,7 @@ export const createComment = async (req, res) => {
         text,
         owner: user._id,
         video: id
-    });
+    }); 
     video.comments.push(comment._id);
     userDB.comments.push(comment._id);
     await video.save();
@@ -158,8 +169,18 @@ export const createComment = async (req, res) => {
     return res.status(201).json({newCommentId:comment._id});
 }
 
+
+
 export const deleteComment = async (req, res) => {
     const {id} = req.params;
+    const {session: {user}} = req;
+    const confirm = await Comment.findById(id);
+    if(!confirm)  return res.sendStatus(404); 
+    if(String(confirm.owner) !== user._id) return res.sendStatus(403);
     const comment = await Comment.findByIdAndRemove(id);
-    return res.sendStatus(200)
+    const users = await User.findById(comment.owner);
+    const videos = await Video.findById(comment.video);
+    deleteRelatedDB(users, "comment", comment._id);
+    deleteRelatedDB(videos, "comment", comment._id);
+    return res.sendStatus(200);
 }
