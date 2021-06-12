@@ -20,7 +20,7 @@ header
                         if loggedInUser.avatarUrl === undefined
                             span X
                         else 
-                            if loggedInUser.socialOnly
+                            if loggedInUser.avatarUrl.includes("github")
                                 img(src=loggedInUser.avatarUrl).header__avatar
                             else
                                 img(src="/" + loggedInUser.avatarUrl).header__avatar
