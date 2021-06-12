@@ -16,6 +16,6 @@ var _server = _interopRequireDefault(require("./server.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-_server["default"].listen(4000, function () {
+_server["default"].listen(process.env.PORT || 4000, function () {
   console.log("Listening on port 4000");
 });

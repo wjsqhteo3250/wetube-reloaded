@@ -6,4 +6,4 @@ import User from "./models/User.js"
 import Comment from "./models/Comment.js"
 import app from "./server.js"
 
-app.listen(4000, ()=>{console.log("Listening on port 4000")});
+app.listen(process.env.PORT || 4000, ()=>{console.log("Listening on port 4000")});
