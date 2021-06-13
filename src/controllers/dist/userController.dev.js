@@ -390,7 +390,7 @@ var postEdit = function postEdit(req, res) {
             email: email,
             username: username,
             location: location,
-            avatarUrl: file ? file.path : avatarUrl
+            avatarUrl: file ? file.location : avatarUrl
           }, {
             "new": true
           }));

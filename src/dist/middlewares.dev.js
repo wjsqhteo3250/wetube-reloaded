@@ -21,7 +21,8 @@ var s3 = new _awsSdk["default"].S3({
 });
 var multerUploader = (0, _multerS["default"])({
   s3: s3,
-  bucket: 'wetubeeeeeeeee'
+  bucket: 'wetubeeeeeeeee',
+  acl: "public-read"
 });
 
 var localsMiddleware = function localsMiddleware(req, res, next) {

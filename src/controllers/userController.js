@@ -171,7 +171,7 @@ export const postEdit = async (req, res) =>{
             email, 
             username, 
             location, 
-            avatarUrl: file ? file.path : avatarUrl
+            avatarUrl: file ? file.location : avatarUrl
         },{new: true});
     req.session.user = updatedUser;
     return res.redirect("/");
