@@ -19,7 +19,7 @@ var _userRouter = _interopRequireDefault(require("./routers/userRouter.js"));
 
 var _videoRouter = _interopRequireDefault(require("./routers/videoRouter.js"));
 
-var _middleWares = require("./middleWares.js");
+var _middlewares = require("./middlewares.js");
 
 var _connectMongo = _interopRequireDefault(require("connect-mongo"));
 
@@ -44,7 +44,7 @@ app.use((0, _expressSession["default"])({
   })
 }));
 app.use((0, _expressFlash["default"])());
-app.use(_middleWares.localsMiddleware);
+app.use(_middlewares.localsMiddleware);
 app.use("/uploads", _express["default"]["static"]('uploads'));
 app.use("/static", _express["default"]["static"]('assets'));
 app.use("/", _rootRouter["default"]);

@@ -5,7 +5,7 @@ import flash from "express-flash";
 import rootRouter from "./routers/rootRouter.js";
 import userRouter from "./routers/userRouter.js";
 import videoRouter from "./routers/videoRouter.js";
-import { localsMiddleware } from "./middleWares.js";
+import { localsMiddleware } from "./middlewares.js";
 import MongoStore from "connect-mongo";
 import apiRouter from "./routers/apiRouter.js";
 
