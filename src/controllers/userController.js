@@ -165,13 +165,14 @@ export const postEdit = async (req, res) =>{
                     pageTitle:"Edit profile", errorMessage : "email already exist"});
             }
         }
+    const isHeroku = process.env.NODE_ENV === "production";
     const updatedUser = await User.findByIdAndUpdate(_id, 
         {
             name, 
             email, 
             username, 
             location, 
-            avatarUrl: file ? file.location : avatarUrl
+            avatarUrl: file ? (isHeroku ? file.location :file.path) : avatarUrl
         },{new: true});
     req.session.user = updatedUser;
     return res.redirect("/");

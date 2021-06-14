@@ -2,7 +2,7 @@ import Video from "../models/Video.js";
 import User from "../models/User.js";
 import Comment from "../models/Comment.js";
 import { compileFile } from "pug";
-//test git heroku connetion
+
 export const home = async (req, res)=>{
     try {
         const videos = await Video.find({}).sort({createdAt : "desc"}).populate("owner");
@@ -68,12 +68,13 @@ export const postUpload = async (req, res) => {
         body:{title, description, hashtags}, 
         files:{video, thumb}, 
         session:{user:{_id}} }= req;
+    const isHeroku = processs.env.NODE_ENV === "production";
     try {
         const newVideo = await Video.create({
             title, 
             description, 
-            fileUrl: video[0].location,
-            thumbUrl:thumb[0].location,
+            fileUrl: isHeroku ? video[0].location : video[0].path,
+            thumbUrl:isHeroku ? thumb[0].location : thumb[0].destination+thumb[0].filename,
             // thumb[0].destination+thumb[0].filename
             owner: _id,
             hashtags : Video.formatHashtags(hashtags)

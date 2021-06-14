@@ -19,9 +19,15 @@ var s3 = new _awsSdk["default"].S3({
     secretAccessKey: process.env.AWS_SECRET
   }
 });
-var multerUploader = (0, _multerS["default"])({
+var isHeroku = process.env.NODE_ENV === "production";
+var s3ImageUploader = (0, _multerS["default"])({
   s3: s3,
-  bucket: 'wetubeeeeeeeee',
+  bucket: 'wetubeeeeeeeee/images',
+  acl: "public-read"
+});
+var s3VideoUploader = (0, _multerS["default"])({
+  s3: s3,
+  bucket: 'wetubeeeeeeeee/videos',
   acl: "public-read"
 });
 
@@ -29,6 +35,7 @@ var localsMiddleware = function localsMiddleware(req, res, next) {
   res.locals.loggedIn = Boolean(req.session.loggedIn);
   res.locals.siteName = "Wetube";
   res.locals.loggedInUser = req.session.user;
+  res.locals.isHeroku = isHeroku;
   next();
 };
 
@@ -60,7 +67,7 @@ var avatarUpload = (0, _multer["default"])({
   limits: {
     fileSize: 3000000
   },
-  storage: multerUploader
+  storage: isHeroku ? s3ImageUploader : undefined
 });
 exports.avatarUpload = avatarUpload;
 var videoUpload = (0, _multer["default"])({
@@ -68,6 +75,6 @@ var videoUpload = (0, _multer["default"])({
   limits: {
     fileSize: 10000000
   },
-  storage: multerUploader
+  storage: isHeroku ? s3VideoUploader : undefined
 });
 exports.videoUpload = videoUpload;

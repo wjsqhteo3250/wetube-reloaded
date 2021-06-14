@@ -15,7 +15,6 @@ var _pug = require("pug");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-//test git heroku connetion
 var home = function home(req, res) {
   var _videos;
 
@@ -216,54 +215,55 @@ var getUpload = function getUpload(req, res) {
 exports.getUpload = getUpload;
 
 var postUpload = function postUpload(req, res) {
-  var _req$body2, title, description, hashtags, _req$files, video, thumb, _id, newVideo, user;
+  var _req$body2, title, description, hashtags, _req$files, video, thumb, _id, isHeroku, newVideo, user;
 
   return regeneratorRuntime.async(function postUpload$(_context5) {
     while (1) {
       switch (_context5.prev = _context5.next) {
         case 0:
           _req$body2 = req.body, title = _req$body2.title, description = _req$body2.description, hashtags = _req$body2.hashtags, _req$files = req.files, video = _req$files.video, thumb = _req$files.thumb, _id = req.session.user._id;
-          _context5.prev = 1;
-          _context5.next = 4;
+          isHeroku = processs.env.NODE_ENV === "production";
+          _context5.prev = 2;
+          _context5.next = 5;
           return regeneratorRuntime.awrap(_Video["default"].create({
             title: title,
             description: description,
-            fileUrl: video[0].location,
-            thumbUrl: thumb[0].location,
+            fileUrl: isHeroku ? video[0].location : video[0].path,
+            thumbUrl: isHeroku ? thumb[0].location : thumb[0].destination + thumb[0].filename,
             // thumb[0].destination+thumb[0].filename
             owner: _id,
             hashtags: _Video["default"].formatHashtags(hashtags)
           }));
 
-        case 4:
+        case 5:
           newVideo = _context5.sent;
-          _context5.next = 7;
+          _context5.next = 8;
           return regeneratorRuntime.awrap(_User["default"].findById(_id));
 
-        case 7:
+        case 8:
           user = _context5.sent;
           user.videos.push(newVideo._id);
-          _context5.next = 11;
+          _context5.next = 12;
           return regeneratorRuntime.awrap(user.save());
 
-        case 11:
+        case 12:
           return _context5.abrupt("return", res.redirect("/"));
 
-        case 14:
-          _context5.prev = 14;
-          _context5.t0 = _context5["catch"](1);
+        case 15:
+          _context5.prev = 15;
+          _context5.t0 = _context5["catch"](2);
           console.log(_context5.t0);
           return _context5.abrupt("return", res.status(400).render("upload", {
             pageTitle: "Upload",
             errorMessage: _context5.t0._message
           }));
 
-        case 18:
+        case 19:
         case "end":
           return _context5.stop();
       }
     }
-  }, null, null, [[1, 14]]);
+  }, null, null, [[2, 15]]);
 }; //delete related database feilds
 
 
