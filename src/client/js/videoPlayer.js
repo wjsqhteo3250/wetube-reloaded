@@ -10,7 +10,7 @@ const timeLine = document.getElementById("timeLine");
 const fullScreenBtn = document.getElementById("fullScreen");
 const videoContainer = document.getElementById("videoContainer");
 const videoControls = document.getElementById("videoControls");
-
+const commentArea = document.getElementById("commentArea");
 
 let volumeTmp;
 let controlsTimeout = null;
@@ -122,15 +122,18 @@ const handleMousePlay = (e) => {
 }
 
 const handleSpaceKye = (e) => {
+    if(e.target.id === "commentArea") return;
     if(e.code !== "Space") return;
     handlePlayClick();
 }
 const handleFullScreenKye = (e) => {
+    if(e.target.id === "commentArea") return;
     if(e.code !== "Enter" && e.code !== "KeyF") return;
     handleFullScreen();
 }
 
 const handleEscKye = () => {
+    if(e.target.id === "commentArea") return;
     if(document.fullscreenElement !== null) return;
     fullScreenBtn.firstChild.classList.remove("fa-compress");
     fullScreenBtn.firstChild.classList.add("fa-expand");
@@ -139,7 +142,6 @@ const handleEscKye = () => {
 const handleEnded = () => {
     const { id } = videoContainer.dataset
     fetch(`/api/videos/${id}/view`, {method:"post"})
-
 }
 
 playBtn.addEventListener("click", handlePlayClick);
@@ -154,6 +156,6 @@ videoContainer.addEventListener("mouseleave", handleMouseLeave);
 video.addEventListener("dblclick", handleFullScreen);
 video.addEventListener("click",handleMousePlay);
 video.addEventListener("ended", handleEnded);
-videoContainer.addEventListener("keydown", handleSpaceKye);
-videoContainer.addEventListener("keydown", handleFullScreenKye);
-videoContainer.addEventListener("fullscreenchange", handleEscKye);
+window.addEventListener("keydown", handleSpaceKye);
+window.addEventListener("keydown", handleFullScreenKye);
+window.addEventListener("fullscreenchange", handleEscKye);
